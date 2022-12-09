@@ -9,9 +9,9 @@
     <jgroups>
         <stack name="jdbc-ping-tcp" extends="tcp">
             <JDBC_PING connection_driver="com.mysql.cj.jdbc.Driver"
-                       connection_username="${env.DB_USER}"
-                       connection_password="${env.DB_PASSWORD}"
-                       connection_url="${env.DB_ADDR}"
+                       connection_username="${env.KC_DB_USERNAME}"
+                       connection_password="${env.KC_DB_PASSWORD}"
+                       connection_url="${env.KC_DB_URL}"
                        info_writer_sleep_time="500"
                        initialize_sql="CREATE TABLE IF NOT EXISTS JGROUPSPING (own_addr varchar(200) NOT NULL, cluster_name varchar(200) NOT NULL, ping_data VARBINARY(255), constraint PK_JGROUPSPING PRIMARY KEY (own_addr, cluster_name));"
                        remove_all_data_on_view_change="true"
