@@ -2,9 +2,10 @@ ARG KEYCLOAK_VERSION=19.0.1
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as build
 
-# specify the custom cache config file here
-ENV KC_DB=mysql
+# Configure a database vendor
+ENV DB_VENDOR=mysql
 
+# specify the custom cache config file here
 ENV KC_CACHE_CONFIG_FILE=cache-ispn-jdbc-ping.xml
 
 # copy the custom cache config file into the keycloak conf dir
