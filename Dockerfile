@@ -2,8 +2,6 @@ ARG KEYCLOAK_VERSION=20.0.1
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as build
 
-ENV KC_FEATURES
-
 # specify the custom cache config file here
 ENV KC_CACHE_CONFIG_FILE=cache-ispn-jdbc-ping.xml
 
