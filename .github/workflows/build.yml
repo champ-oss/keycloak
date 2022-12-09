@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  REPO: champtitles/keycloak
+  SHA: ${{ github.sha }}
+  DOCKER_USERNAME: champtitles
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+jobs:
+  build-keycloak:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2.0.0
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3.0.0
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.REPO }}:${{ env.SHA }}
