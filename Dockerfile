@@ -10,4 +10,6 @@ COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=builder /opt/keycloak/conf/cache-ispn-jdbc-ping.xml /opt/keycloak/conf
 WORKDIR /opt/keycloak
 
+EXPOSE 8080 7600
+
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
