@@ -23,8 +23,7 @@
          </stack>
     </jgroups>
     <cache-container name="keycloak">
-        <!-- custom stack must be referenced by name in the stack attribute of the transport element -->
-        <transport lock-timeout="60000" stack="jdbc-ping-tcp"/>
+        <transport lock-timeout="60000" stack="${env.KC_DB}-jdbc-ping-tcp"/>
         <local-cache name="realms">
             <encoding>
                 <key media-type="application/x-java-object"/>
