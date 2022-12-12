@@ -10,6 +10,8 @@ COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=builder /opt/keycloak/conf/cache-ispn-jdbc-ping.xml /opt/keycloak/conf
 WORKDIR /opt/keycloak
 
-EXPOSE 8080 7800
+RUN export JGROUPS_DISCOVERY_EXTERNAL_IP=$(curl -fs "${ECS_CONTAINER_METADATA_URI_V4}" | jq -r '.Networks[0].IPv4Addresses[0]')
+
+EXPOSE 8080 7600
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
