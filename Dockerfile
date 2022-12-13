@@ -1,19 +1,24 @@
 ARG KEYCLOAK_VERSION=20.0.1
 
+FROM public.ecr.aws/docker/library/maven:3.8.4-openjdk-17-slim as maven-builder
+
+COPY pom.xml ./
+
+RUN mvn package
+
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION} as build
 
-ENV KC_FEATURES
+COPY --from=maven-builder --chown=keycloak target/s3-native-ping-bundle-*-jar-with-dependencies.jar /opt/keycloak/providers/
 
-# specify the custom cache config file here
-ENV KC_CACHE_CONFIG_FILE=cache-ispn-jdbc-ping.xml
-
-# copy the custom cache config file into the keycloak conf dir
-COPY ./cache-ispn-jdbc-ping.xml /opt/keycloak/conf/cache-ispn-jdbc-ping.xml
+ENV KC_METRICS_ENABLED=true \
+    KC_DB=mysql \
+    KC_CACHE=ispn \
+    KC_CACHE_STACK=ec2
 
 RUN /opt/keycloak/bin/kc.sh build
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 COPY --from=build /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
-WORKDIR /opt/keycloak
+COPY --from=build /opt/keycloak/providers/* /opt/keycloak/providers/
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
