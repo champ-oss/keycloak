@@ -22,7 +22,7 @@ COPY --from=build /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=build /opt/keycloak/providers/* /opt/keycloak/providers/
 COPY scripts/create-client.sh /opt/keycloak/scripts/create-client.sh
 RUN which user
-user root
+USER root
 
 RUN which user
 RUN microdnf update -y && microdnf install -y jq && microdnf clean all
