@@ -21,6 +21,6 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 COPY --from=build /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=build /opt/keycloak/providers/* /opt/keycloak/providers/
 COPY scripts/create-client.sh /opt/keycloak/scripts/create-client.sh
-RUN micro-dnf install jq
+RUN microdnf install -y jq
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
