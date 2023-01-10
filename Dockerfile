@@ -21,7 +21,7 @@ FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
 COPY --from=build /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=build /opt/keycloak/providers/* /opt/keycloak/providers/
 COPY scripts/create-client.sh /opt/keycloak/scripts/create-client.sh
-
+RUN jq --version
 USER root
 
 RUN microdnf update -y && microdnf install -y jq && microdnf clean all
