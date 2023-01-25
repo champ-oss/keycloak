@@ -1,4 +1,4 @@
-ARG KEYCLOAK_VERSION=20.0.2
+ARG KEYCLOAK_VERSION=20.0.3
 
 FROM public.ecr.aws/docker/library/maven:3.8.4-openjdk-17-slim as maven-builder
 
